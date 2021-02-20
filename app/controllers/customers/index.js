@@ -4,25 +4,25 @@ import { sort } from '@ember/object/computed';
 
 export default Controller.extend({
   sortProperty: 'lastName',
-  SearchProperty: 'lastName',
+  SearchProperty: 'fullName',
   SearchString: '',
 
-  customersSortProps: computed('sortProperty', function() {
+  customersSortProps: computed('sortProperty', function () {
     return [this.sortProperty];
   }),
 
-  customersSearchProperty: computed('SearchProperty', function() {
+  customersSearchProperty: computed('SearchProperty', function () {
     return [this.SearchProperty];
   }),
 
-  customersSearchString: computed('SearchString', function() {
+  customersSearchString: computed('SearchString', function () {
     return [this.SearchString];
   }),
 
   sortedCustomers: sort('model', 'customersSortProps'),
 
-  sortedAndFilteredCustomers: computed(function () {
-    let filteredList = this.get('model').filter(x => x[this.SearchProperty].toString().includes(this.SearchString)).sort((a, b) => {
+  sortedAndFilteredCustomers: computed('sortProperty', 'SearchProperty','SearchString', function () {
+    let filteredList = this.get('model').filter(x => x[this.SearchProperty].toLowerCase().includes(this.SearchString.toLowerCase())).sort((a, b) => {
       if (a[this.customersSortProps] > b[this.customersSortProps]) {
         return 1;
       } else if (a[this.customersSortProps] < b[this.customersSortProps]) {
@@ -31,5 +31,5 @@ export default Controller.extend({
       return 0;
     });
     return filteredList;
-  }),
+  })
 });

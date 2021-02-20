@@ -1,6 +1,6 @@
 import Controller from '@ember/controller';
 import { computed } from '@ember/object';
-import { sort } from '@ember/object/computed';
+
 export default Controller.extend({
     customersbudget: computed(function () {
         var formatter = new Intl.NumberFormat('en-US', {
